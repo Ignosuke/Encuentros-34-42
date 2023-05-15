@@ -44,17 +44,18 @@ public class AlumnoService {
         boolean yes = true;
         Iterator<Alumno> it = alumnos.iterator();
 
-        while (it.hasNext()) {
-            if (it.next().getNombre().equalsIgnoreCase(nombre)) {
-                ArrayList<Integer> aux = it.next().getNotas();
-
+        outer:while (it.hasNext()) {
+            Alumno aux = it.next();
+            if (aux.getNombre().equalsIgnoreCase(nombre)) {
                 yes = false;
 
-                notaF = aux.get(0) + aux.get(1) + aux.get(2);
+                for (Integer notas : aux.getNotas()) {
+                    notaF += notas;
+                }
 
-                notaF /= 3;
+                notaF /= aux.getNotas().size();
                 
-                break;
+                break outer;
             }
         }
         if (yes) {
